@@ -1,27 +1,33 @@
-def list_to_string(list):
-    result = ""
-    return result.join(list)
+# Extended viginere
 
-def prepKey(text, key):
+def list_to_string(list):
+    return "".join(list)
+
+def setKeyToTextLength(text_len, key):
     key = list(key)
-    if len(text) != len(key):
-        for i in range(len(text) - len(key)):
+    if text_len > len(key):
+        for i in range(text_len - len(key)):
             key.append(key[i % len(key)])
+    else:
+        for i in range(text_len):
+            key.append(key[i])
     return key
 
 def extendedVEncrypt(text, key):
-    key = prepKey(text, key)
+    key = setKeyToTextLength(len(text), key)
     result = list()
     for i in range(len(text)):
         result.append(chr((ord(text[i]) + ord(key[i])) % 256))
     return list_to_string(result)
 
+
 def extendedVDecrypt(text, key):
-    key = prepKey(text, key)
+    key = setKeyToTextLength(len(text), key)
     result = list()
     for i in range(len(text)):
         result.append(chr((ord(text[i]) - ord(key[i])) % 256))
     return list_to_string(result)
+
 
 # path = r"Tugas1Kominter_18220104.pdf"
 # bin_data = open(path, 'rb').read()

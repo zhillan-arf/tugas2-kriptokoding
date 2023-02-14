@@ -66,6 +66,12 @@ def cleanse(text):
     return cleantext
 
 
+def string_to_int_list(text):
+    int_list = list()
+    for i in range(len(text)):
+        int_list.append(ord(text[i]))
+    return int_list
+
 def secure_pos(pos):
     if pos == "":
         pos = "A"
