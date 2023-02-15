@@ -49,9 +49,6 @@ def mosc_encrypt(plaintext, key):
     ciphertext_rc4 = xor(generate_keystream(key, len(ciphertext_pf)), ciphertext_pf)  # Temp
     # ciphertext_ev = ev.extendedVEncrypt(ciphertext_pf, key)
     # ciphertext_rc4 = xor(generate_keystream(key, len(ciphertext_ev)), ciphertext_)ev
-    print("Debug 2.")
-    print(plaintext)
-    print(ciphertext_pf)
     return ciphertext_rc4
 
 
@@ -60,8 +57,5 @@ def mosc_decrypt(cipherstream, key):
     # ciphertext_pf = pf.playfairDecrypt(cipherstream_ev, key)
     # plaintext = ev.extendedVEncrypt(ciphertext_pf, key)
     ciphertext_pf = xor(generate_keystream(key, len(cipherstream)), cipherstream)
-    plaintext = pf.playfairDecrypt(ciphertext_pf, key)
-    print("Debug 3.")
-    print(ciphertext_pf)
-    print(plaintext)
+    plaintext = pf.playfairDecrypt(ciphertext_pf.decode(), key)
     return plaintext

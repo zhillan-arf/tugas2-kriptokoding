@@ -6,13 +6,13 @@ import ciphers.playfair as pf
 plaintext = "Where no counsel is, the people fall... (Proverbs 11:14)"
 key = "11073"
 
-print("Debug 1.")
-print(plaintext)
-ciphertext = pf.playfairEncrypt(plaintext, key)
-print(ciphertext)
-plaintext = pf.playfairDecrypt(ciphertext, key)
-print(plaintext)
-print("\n")
+# print("Debug 1")
+# print(plaintext)
+# ciphertext = pf.playfairEncrypt(plaintext, key)
+# print(ciphertext)
+# plaintext = pf.playfairDecrypt(ciphertext, key)
+# print(plaintext)
+# print("\n")
 
 # S = mosc.get_key_schedule(key)
 # print(S)
