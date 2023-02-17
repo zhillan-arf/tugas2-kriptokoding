@@ -50,7 +50,6 @@ def home():
             except UnicodeDecodeError:
                 return(render_template('layout.html', error = "Invalid input! Only base64 is accepted."))
             name = f"decrypted.{extension}"
-            print(name)
             path = os.path.join(app.config['DOWNLOAD_FOLDER'], name)
             tools.export_decrypted(plain, path)
             return (render_template('layout.html', error="", result = plain, filename = name, textinput = text, key = key, extension = extension))
