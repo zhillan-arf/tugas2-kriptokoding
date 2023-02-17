@@ -1,8 +1,6 @@
 # My Own Stream Cipher (MOSC)
 # Modified from Rivest Cipher 4
 import ciphers.extendedVigenere as ev
-import ciphers.playfair as pf
-import ciphers.tools as tools
 import base64
 
 def get_key_schedule(key):
