@@ -2,35 +2,68 @@
 <html>
 
 <head>
-    <title>Menu</title>
+    <title>MyOwnStreamCipher</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
-    <h1>Menu</h1>
+    <h1>MyOwnStreamCipher</h1>
     <hr class=" rounded">
     <br>
-    <ul>
-        <form action="/vigenere-cipher" method="GET">
-            <button class="menu_btn">Standard Vigenere Cipher</button>
+    <div>
+        <form id="form-group" method="POST" enctype="multipart/form-data">
+            <div class="btn-group-toggle" data-toggle="buttons">
+                <input type="radio" name="options" id="encryptbtn" name="options" value="1" autocomplete="off"
+                    class="radiobtn" checked>
+                <label for="encryptbtn">Encrypt</label>
+                <input type="radio" name="options" id="decryptbtn" name="options" value="2" autocomplete="off"
+                    class="radiobtn">
+                <label for="decryptbtn">Decrypt</label>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control text-monospace" form="form-group" rows="5" cols="50" name="plaintext"
+                    spellcheck="false" placeholder="Type here...">{{textinput}}</textarea>
+            </div>
+            <br>
+            <div>
+                <label class="test1">
+                    <button class="file-test-btn"><input type="file" name="file" /></button>
+                </label>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="encryptionkey" class="h4">Encryption key</label>
+                <input class="form-control" name="encryptionkey" type="text" placeholder="Enter key here (only letters)"
+                    value="{{key}}">
+            </div>
+            <br>
+            <div class=" form-group">
+                <label for="extension" class="h4">File Extension</label>
+                <input class="form-control" name="extension" type="text"
+                    placeholder="Enter extension here (without dot)" value="{{extension}}">
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <br>
+            {% if error != '' %}
+            <p><strong>ERROR: {{ error }} </strong></p>
+            {% endif %}
         </form>
-        <br>
-        <form action="/extended-vigenere-cipher" method="GET">
-            <button class="menu_btn">Extended Vigenere Cipher</button>
-        </form>
-        <br>
-        <form action="/playfair-cipher" method="GET">
-            <button class="menu_btn">Playfair Cipher</button>
-        </form>
-        <br>
-        <form action="/otp-cipher" method="GET">
-            <button class="menu_btn">One-Time Pad</button>
-        </form>
-        <br>
-        <form action="/enigma-cipher" method="GET">
-            <button class="menu_btn">Enigma Cipher</button>
-        </form>
-    </ul>
+    </div>
+    <br>
+    <h3>Results</h3>
+    <h4>Base64</h4>
+    <textarea class="form-control text-monospace" rows="3" cols="50" id="resulttext" spellcheck="false"
+        readonly>{{ result }}</textarea>
+    <div class="container">
+        <a href="./downloads/{{filename}}" download>
+            <div>
+                <button class="btn">
+                    Download
+                </button>
+            </div>
+        </a>
+    </div>
 </body>
 
 </html>
