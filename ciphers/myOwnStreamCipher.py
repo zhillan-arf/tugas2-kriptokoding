@@ -44,18 +44,25 @@ def xor(keystream, stream):
     return R
 
 
-def mosc_encrypt(plaintext, key):
-    plaintext = tools.cleanse(plaintext)
-    ciphertext_ev = ev.extendedVEncrypt(plaintext, key)
+def mosc_encrypt(plainstream, key):
+    print("Debug! PL", plainstream, "\n\n")
+    if type(plainstream) == str:
+        plain_arr = bytearray(plainstream.encode())
+    else:
+        plain_arr = bytearray(plainstream)
+    plain_64_str = base64.b64encode(plain_arr).decode('utf-8')
+    ciphertext_ev = ev.extendedVEncrypt(plain_64_str, key)
     ciph_ev_b64 = base64.b64encode(ciphertext_ev.encode('utf-8')).decode('utf-8')
     cipherstream_rc4 = xor(generate_keystream(key, len(ciph_ev_b64)), ciph_ev_b64)
-    ciphertext = base64.b64encode(cipherstream_rc4).decode('utf-8')
-    return ciphertext
+    ciphertext_64 = base64.b64encode(cipherstream_rc4).decode('utf-8')
+    return ciphertext_64
 
 
-def mosc_decrypt(ciphertext, key):
-    cipherstream_rc4 = bytearray(base64.b64decode(ciphertext))
+def mosc_decrypt(ciphertext_64, key):
+    cipherstream_rc4 = bytearray(base64.b64decode(ciphertext_64))
     ciph_ev_btarr = xor(generate_keystream(key, len(cipherstream_rc4)), cipherstream_rc4)
-    ciphertext_ev = base64.b64encode(ciph_ev_btarr).decode('utf-8')
-    plaintext = ev.extendedVDecrypt(ciphertext_ev, key)
-    return plaintext
+    ciph_ev_b64 = ciph_ev_btarr.decode()
+    ciphertext_ev = base64.b64decode(ciph_ev_b64).decode('utf-8')
+    plain_64 = ev.extendedVDecrypt(ciphertext_ev, key)
+    plainstream = base64.b64decode(plain_64).decode('utf-8')
+    return plainstream
