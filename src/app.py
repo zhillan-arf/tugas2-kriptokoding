@@ -31,12 +31,10 @@ def home():
                 return render_template('layout.html', error="No File not Text to Encrypt")
             inputfile = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
             file.save(inputfile)
-            text = tools.read_encrypt(inputfile)
-        # if text != "" and file.filename != "":
-        #     if both exist, pick file only
-            
+            text = tools.read_encrypt(inputfile)            
         if key == "":
             return render_template('layout.html', error='No Key Available')
+        
         if mode == "1":
             cipher = mosc.mosc_encrypt(text, key)
             name = "encrypted"
@@ -57,7 +55,6 @@ def home():
             tools.export_decrypted(plain, path)
             return (render_template('layout.html', error="", result = plain, filename = name, textinput = text, key = key, extension = extension))
         
-
     return render_template('layout.html', error="")
 
 @app.route("/downloads/<name>", methods=['GET'])
