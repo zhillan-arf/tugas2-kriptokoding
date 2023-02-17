@@ -10,34 +10,11 @@ button {
     margin-bottom: 10px;
 }
 
-.menu_btn {
-    border: none;
-    background-color: lightgray;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    text-align: center;
-    display: inline-block;
-    padding: 1rem 2rem;
-}
-
-.menu_btn:hover {
-    background-color: gray;
-    color: white;
-}
-
 h1 {
     text-align: center;
     margin-bottom: 20px;
     font-size: 36px;
     font-weight: bold;
-}
-
-ul {
-    text-align: center;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
 }
 
 hr.rounded {

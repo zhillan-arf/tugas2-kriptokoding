@@ -45,7 +45,6 @@ def xor(keystream, stream):
 
 
 def mosc_encrypt(plainstream, key):
-    print("Debug! PL", plainstream, "\n\n")
     if type(plainstream) == str:
         plain_arr = bytearray(plainstream.encode())
     else:
