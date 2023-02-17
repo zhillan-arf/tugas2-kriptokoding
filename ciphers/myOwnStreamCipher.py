@@ -3,6 +3,7 @@
 import ciphers.extendedVigenere as ev
 import ciphers.playfair as pf
 import ciphers.tools as tools
+import base64
 
 def get_key_schedule(key):
     # Uses the Key-scheduling algorithm (KSA)
@@ -45,17 +46,16 @@ def xor(keystream, stream):
 
 def mosc_encrypt(plaintext, key):
     plaintext = tools.cleanse(plaintext)
-    ciphertext_pf = pf.playfairEncrypt(plaintext, key)
-    ciphertext_rc4 = xor(generate_keystream(key, len(ciphertext_pf)), ciphertext_pf)  # Temp
-    # ciphertext_ev = ev.extendedVEncrypt(ciphertext_pf, key)
-    # ciphertext_rc4 = xor(generate_keystream(key, len(ciphertext_ev)), ciphertext_)ev
-    return ciphertext_rc4
+    ciphertext_ev = ev.extendedVEncrypt(plaintext, key)
+    ciph_ev_b64 = base64.b64encode(ciphertext_ev.encode('utf-8')).decode('utf-8')
+    cipherstream_rc4 = xor(generate_keystream(key, len(ciph_ev_b64)), ciph_ev_b64)
+    ciphertext = base64.b64encode(cipherstream_rc4).decode('utf-8')
+    return ciphertext
 
 
-def mosc_decrypt(cipherstream, key):
-    # cipherstream_ev = xor(generate_keystream(key, len(cipherstream)), cipherstream)
-    # ciphertext_pf = pf.playfairDecrypt(cipherstream_ev, key)
-    # plaintext = ev.extendedVEncrypt(ciphertext_pf, key)
-    ciphertext_pf = xor(generate_keystream(key, len(cipherstream)), cipherstream)
-    plaintext = pf.playfairDecrypt(ciphertext_pf.decode(), key)
+def mosc_decrypt(ciphertext, key):
+    cipherstream_rc4 = bytearray(base64.b64decode(ciphertext))
+    ciph_ev_btarr = xor(generate_keystream(key, len(cipherstream_rc4)), cipherstream_rc4)
+    ciphertext_ev = base64.b64encode(ciph_ev_btarr).decode('utf-8')
+    plaintext = ev.extendedVDecrypt(ciphertext_ev, key)
     return plaintext

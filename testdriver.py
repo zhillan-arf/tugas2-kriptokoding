@@ -27,5 +27,5 @@ key = "11073"
 
 cipherstream = mosc.mosc_encrypt(plaintext, key)
 print(cipherstream)
-plaintext = mosc.mosc_decrypt(cipherstream, key)
+plainstream = mosc.mosc_decrypt(cipherstream, key)
 print(plaintext)
