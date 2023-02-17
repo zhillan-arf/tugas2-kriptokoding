@@ -32,8 +32,8 @@ def home():
             inputfile = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
             file.save(inputfile)
             text = tools.read_encrypt(inputfile)
-        if text != "" and file.filename != "":
-            # if both exist, pick file only
+        # if text != "" and file.filename != "":
+        #     if both exist, pick file only
             
         if key == "":
             return render_template('layout.html', error='No Key Available')
@@ -47,7 +47,10 @@ def home():
         elif mode == "2":
             if extension == "":
                 extension = "txt"
-            plain = mosc.mosc_decrypt(text, key)
+            try:
+                plain = mosc.mosc_decrypt(text, key)
+            except UnicodeDecodeError:
+                return(render_template('layout.html', error = "Invalid input! Only base64 is accepted."))
             name = f"decrypted.{extension}"
             print(name)
             path = os.path.join(app.config['DOWNLOAD_FOLDER'], name)
